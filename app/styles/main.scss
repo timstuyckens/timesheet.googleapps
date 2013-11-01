@@ -1,0 +1,54 @@
+@import "compass_twitter_bootstrap";
+
+body{
+	margin-left: 13%;
+	margin-right: 13%;
+}
+#groupedEventsContainer {
+  @include makeRow();        
+  .groupedEvents {
+    @include makeColumn(6); 
+  }
+}
+
+table{
+	@extend .table;
+	@extend .table-hover;
+	@extend .table-bordered;
+}
+
+button{
+	@extend .btn-primary;
+}
+.maxNumberCatOccurrence {
+	width:  40px;
+}
+
+#mainContainer,#settingsContainer{
+	margin-top:90px;
+}
+
+#timesheetContainer tr:last-child td {
+    font-weight:bold;
+}
+#handtekening{
+	display:none;
+}
+.weekend{
+	font-style:italic;
+}
+.shortHome{
+	display:none !important;
+}
+.logo{
+	background-image: url("../images/bitelogo.png");
+	background-size: 190px 80px;
+	background-repeat: no-repeat;
+	height: 56px;
+	padding-top: 27px;
+	padding-bottom: 0px;
+	margin-bottom: 0px;
+	background-position: right top;
+}
+@import "mobile";
+@import "print";

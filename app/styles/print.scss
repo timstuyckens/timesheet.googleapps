@@ -1,0 +1,43 @@
+
+@media print {
+	.table th, table th, table th, .table td, table td, table td {
+		padding: 1px;
+		font-size: 12px;
+	}
+	.weekend {
+		font-style: initial;
+	}
+	.table-bordered th, table th, .table-bordered td, table td {
+		border-left: 2px solid #dddddd;
+	}
+	.table th, table th, .table td, table td {
+		border-top: 2px solid #dddddd;
+	}
+	
+	#handtekening{
+		display:block;
+	}
+
+	.non-printable{
+		display:none;
+	}
+	
+	.logo {
+		height: auto;
+		padding-top: 0x;
+	}
+}
+
+@media print and (max-width: 800px) {
+	.logo {
+		background-image: url("../images/bitelogo.png");
+		background-size: 190px 80px;
+		background-repeat: no-repeat;
+		height: 56px;
+		padding-top: 27px;
+		padding-bottom: 0px;
+		margin-bottom: 0px;
+		background-position: right top;
+		margin-right:15px;
+	}
+}

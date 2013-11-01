@@ -1,0 +1,33 @@
+div#timesheetContainer.container-fluid.hide
+	br.non-printable
+	br.non-printable
+	h1.logo(data-bind="text:title")
+	table
+		thead
+			tr
+				th
+					a.btn.btn-mini.non-printable(data-bind="click:gotoPreviousMonth") <
+					span(style="margin-left:5px;margin-right:5px") Datum
+					a.btn.btn-mini.non-printable(data-bind="click:gotoNextMonth") >
+				th
+				th.non-printable(style="width: 185px;") 
+		tbody
+			<!-- ko foreach: timesheetDays -->
+			tr(data-bind="css:{weekend:isWeekend}")
+				td(data-bind="text:date")
+				td
+					<!-- ko if: workedFullDay -->
+					span(data-bind="text:hours")
+					<!-- /ko -->
+					<!-- ko if: workedHalfDay -->
+					span(data-bind="text:hours")
+					<!-- /ko -->
+				td.non-printable
+					span(data-bind="text:comment")
+			<!-- /ko -->
+
+			tr
+				td Totaal
+				td(data-bind="text:totaal",colspan="2")
+
+	div#handtekening Handtekening

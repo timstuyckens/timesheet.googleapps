@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+  <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+  <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+  <!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+  <!--[if gt IE 8]><!--> <html class="no-js"><!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title></title>
+    <meta name="description" content="">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' /> 
+    <link rel="stylesheet" href="styles/main.css">
+    
+  </head>
+  <body>
+    <header class="navbar navbar-inverse navbar-fixed-top non-printable">
+      <div class="navbar-inner">
+        <div class="container">
+         <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+         </a>
+         <a class="brand navigator longHome" href="#mainContainer">
+          Google Calendar Overview
+          <span class="shortHome">Home</span> 
+         </a>
+         <a class="brand navigator shortHome" href="#mainContainer">
+          Home
+         </a>
+         <div class="nav-collapse collapse">
+          <ul class="nav">
+           <li><a href="#settingsContainer" class="navigator" id="settingsLink">Feestdagen</a></li>
+           <li><a href="#timesheetContainer" class="navigator" id="timesheetLink">Timesheet</a></li>
+          </ul>
+          <p class="navbar-text pull-right" >			
+           <span data-bind="with:user">
+            <!-- ko if: name -->
+            Logged in as <a href="#" class="navbar-link" data-bind="text:name,attr:{href:link}"></a>
+            <!-- /ko -->
+           </span>
+           <!-- ko if: authorized -->
+           <select data-bind="options: calendars, optionsText: 'name', optionsValue:'id', value: calendarId"></select>
+           <a href="https://accounts.google.com/logout">
+            <i class="icon-off icon-white"></i>
+           </a>
+           <!-- /ko -->
+          </p>
+         </div><!--/.nav-collapse -->
+        </div>
+        
+      </div>
+    </header>
+    <div id="settingsContainer" class="container-fluid hide">
+      <form class="form-horizontal">
+        <fieldset>
+          <legend>Feestdagen</legend>
+          <p>De volgende feestdagen worden gedefinieerd in de "Feestdagen" kalender</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Datum</th>
+                <th> </th>
+              </tr>
+            </thead>
+            <tbody data-bind="foreach:holidays">
+              <tr>
+                <td data-bind="text:start.date"></td>
+                <td><span data-bind="text:summary"></span><span data-bind="visible:isRecoverable" style="margin-left: 10px;" class="badge">recoverable</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </fieldset>
+      </form>
+    </div>
+    <div id="timesheetContainer" class="container-fluid hide"><br class="non-printable"><br class="non-printable">
+      <h1 data-bind="text:title" class="logo"></h1>
+      <table>
+        <thead>
+          <tr>
+            <th><a data-bind="click:gotoPreviousMonth" class="btn btn-mini non-printable"><</a><span style="margin-left:5px;margin-right:5px">Datum</span><a data-bind="click:gotoNextMonth" class="btn btn-mini non-printable">></a></th>
+            <th></th>
+            <th style="width: 185px;" class="non-printable"> </th>
+          </tr>
+        </thead>
+        <tbody><!-- ko foreach: timesheetDays -->
+          <tr data-bind="css:{weekend:isWeekend}">
+            <td data-bind="text:date"></td>
+            <td><!-- ko if: workedFullDay --><span data-bind="text:hours"></span><!-- /ko -->
+              <!-- ko if: workedHalfDay --><span data-bind="text:hours"></span><!-- /ko -->
+            </td>
+            <td class="non-printable"><span data-bind="text:comment"></span></td>
+          </tr><!-- /ko -->
+          <tr>
+            <td>Totaal</td>
+            <td data-bind="text:totaal" colspan="2"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="handtekening">Handtekening</div>
+    </div>
+    <div id="mainContainer" class="container-fluid">
+      <!-- ko ifnot: authorized -->
+      <div class="jumbotron">
+       <h1>Vakantie!</h1>
+       <p class="lead">Met deze webapp kan je snel een overzichtje van je vakantie zien. Powered by bITe en Google</p>
+       <!--Add a button for the user to click to initiate auth sequence -->
+       <button id="authorize-button" class="btn-large btn-success" data-bind="css:{hide: loading}">Login</button>
+       <!-- ko if: loading -->
+       <div class="alert alert-block alert-info">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>Een ogenblik geduld.</h4>
+        Er wordt nagegaan of je reeds ingelogd bent.
+       </div>
+       <!-- /ko -->
+      </div>
+      <!-- /ko -->
+      <button id="getEventsButton" data-bind="css:{hide:!authorized()}" class="non-printable">
+       <i class="icon-refresh"></i> Refresh
+      </button>
+      <button id="getPdfButton" data-bind="css:{hide:!authorized()}" class="non-printable">
+       <i class="icon-download"></i> Download PDF  
+      </button>	
+      <div id="timesheet">
+       <!-- ko if: authorized -->
+       <h1>Kort</h1>
+       <table id="shortOverview">
+        <thead>
+         <tr>
+          <th>Type</th>
+          <th>Aantal</th>
+          <th>Opgenomen</th>
+          <th>Gepland</th>
+          <th>Resterend</th>
+         </tr>
+        </thead>
+        <tbody data-bind="foreach: categoryOverviews">
+         <tr>
+          <td data-bind="text:name"></td> 
+          <td data-bind="text:max"></td> 
+          <td data-bind="text:aantalOpgenomen"></td> 
+          <td data-bind="text:aantalGepland"></td> 
+          <td data-bind="text:remaining"></td> 
+         </tr>
+        </tbody>
+       </table>
+       <div>
+        <a class="btn btn-mini non-printable" data-bind="click:gotoPreviousMonth"> < </a>
+        <span style="margin-left:5px;margin-right:5px" data-bind="text:month"> </span> (<span data-bind="text:monthCounter"> </span>)
+        <a class="btn btn-mini non-printable" data-bind="click:gotoNextMonth"> > </a>
+       </div>
+       <ul data-bind="foreach:eventsInMonth">
+        <li>
+         <!-- ko text: startDateText --><!-- /ko -->
+         <!-- ko ifnot: isFullDay -->
+          <i data-bind="visible:isForenoon",style="margin-left: 10px;"> (Voormiddag) </i>
+          <i data-bind="visible:isAfternoon",style="margin-left: 10px;"> (Namiddag) </i>
+         <!-- /ko -->
+        </li>
+       </ul>
+       <!-- /ko -->
+       
+       <div data-bind="foreach:eventsGrouped, css:{hide:!authorized()}" id="groupedEventsContainer">
+        <div class="groupedEvents">
+         <h1 data-bind="text:name">Detail voorbijgaande</h1>
+         <table>
+          <thead>
+           <tr>
+            <th></th>
+            <!-- ko foreach:$root.categories -->
+            <th data-bind="text:name"></th> 
+            <!-- /ko -->
+           </tr>
+          </thead>
+          <tbody data-bind="foreach: items">
+           <tr>
+            <td>
+             <a class="eventLink" data-bind="text:startDateText,attr:{href:htmlLink}"></a> 
+             <!-- ko ifnot: isFullDay -->
+              <span class="badge" data-bind="visible:isForenoon",style="margin-left: 10px;"> Voormiddag </span>
+              <span class="badge" data-bind="visible:isAfternoon",style="margin-left: 10px;"> Namiddag </span>
+             <!-- /ko -->
+            </td>
+            <!-- ko foreach: $root.categories -->
+             <!-- ko if: summaryCatMatch()===$parent.summaryCatMatch -->
+              <td class="mark">x</td> 
+             <!-- /ko -->
+             <!-- ko ifnot: summaryCatMatch()===$parent.summaryCatMatch -->
+              <td class="mark"> </td> 
+             <!-- /ko -->
+            <!-- /ko -->
+           </tr>
+          </tbody>
+        </div>
+       </div>
+      <div>
+    </div><script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="scripts/vendor/jquery.min.js"><\/script>')</script>
+    <!-- build:js scripts/plugins.js -->
+    <script src="scripts/vendor/bootstrap/bootstrap-affix.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-alert.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-dropdown.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-tooltip.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-modal.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-transition.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-button.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-popover.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-typeahead.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-carousel.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-scrollspy.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-collapse.js"></script>
+    <script src="scripts/vendor/bootstrap/bootstrap-tab.js"></script>
+    <!-- endbuild -->
+    <!-- build:js scripts/amd-app.js -->
+    <script data-main="scripts/main.js" src="scripts/vendor/require.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>
