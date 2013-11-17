@@ -1,5 +1,5 @@
 !!! 
-html
+html(ng-app='time')
 	<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 	<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
 	<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
@@ -16,9 +16,7 @@ html
 
 	body
 		include includes/header
-		include includes/settingsContainer	
-		include includes/timesheetContainer	
-		include includes/mainContainer	
+		div(ng-view>)
 
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
 		<script>window.jQuery || document.write('<script src="scripts/vendor/jquery.min.js"><\/script>')</script>
