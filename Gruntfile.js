@@ -46,8 +46,7 @@ module.exports = function(grunt) {
           livereload: '<%= connect.options.livereload %>'
         },
         files: [
-          '.tmp/{,*/}*.html',
-          //'<%= yeoman.app %>/{,*/}*.html',
+          '{<%= yeoman.app %>,.tmp}/{,*/}*.html',
           '.tmp/styles/{,*/}*.css',
           '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
           '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
@@ -200,7 +199,7 @@ module.exports = function(grunt) {
       }
     },
     useminPrepare: {
-      html: '*.tmp/index.html',
+      html: '.tmp/index.html',
       options: {
         dest: '<%= yeoman.dist %>'
       }
@@ -261,11 +260,12 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: '.tmp',
-          src: ['*.html', 'views/*.html'],
+          src: '*.html',
           dest: '<%= yeoman.dist %>'
         }]
       }
     },
+
     // Put files not handled in other tasks here
     copy: {
       dist: {
@@ -288,6 +288,16 @@ module.exports = function(grunt) {
           src: [
             'generated/*'
           ]
+        }, {
+          expand: true,
+          cwd: '<%= yeoman.app %>',
+          src: ['*.html', 'views/{,*/}*.html'],
+          dest: '<%= yeoman.dist %>'
+        }, {
+          expand: true,
+          cwd: '.tmp',
+          src: ['*.html', 'views/{,*/}*.html'],
+          dest: '<%= yeoman.dist %>'
         }]
       },
       styles: {
@@ -300,6 +310,7 @@ module.exports = function(grunt) {
     concurrent: {
       server: [
         'coffee:dist',
+        'jade',
         'compass:server',
         'copy:styles'
       ],
@@ -358,7 +369,6 @@ module.exports = function(grunt) {
       'clean:server',
       'concurrent:server',
       'autoprefixer',
-      'jade',
       'connect:livereload',
       'watch'
     ]);
@@ -374,9 +384,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'jade',
     'useminPrepare',
     'concurrent:dist',
-    'jade',
     'autoprefixer',
     'concat',
     'copy:dist',
