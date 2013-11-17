@@ -1,0 +1,28 @@
+div#settingsContainer.container-fluid.hide
+	form.form-horizontal
+		fieldset
+			legend Feestdagen
+			p De volgende feestdagen worden gedefinieerd in de "Feestdagen" kalender
+			table
+				thead
+					tr
+						th Datum
+						th 
+				tbody(data-bind="foreach:holidays")
+					tr
+						td(data-bind="text:start.date")
+						td
+							span(data-bind="text:summary")
+							span.badge(data-bind="visible:isRecoverable",style="margin-left: 10px;") recoverable
+
+		//-<div data-bind="foreach: categories" id="categoriesData">
+		//-	<div class="control-group">
+		//-		<label class="control-label" for="inputTitle">Titel</label>
+		//-		<div class="controls">
+		//-			<input type="text" id="inputTitle" placeholder="titel event" data-bind="value:name" />
+		//-			<input type="number" placeholder="max aantal keer" data-bind="value:number" class="maxNumberCatOccurrence"/>
+		//-		</div>
+		//-	</div>
+		//-</div>
+
+

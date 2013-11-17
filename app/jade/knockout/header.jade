@@ -1,0 +1,36 @@
+header.navbar.navbar-inverse.navbar-fixed-top.non-printable
+	div.navbar-inner.
+		<div class="container">
+			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</a>
+			<a class="brand navigator longHome" href="#mainContainer">
+				Google Calendar Overview
+				<span class="shortHome">Home</span> 
+			</a>
+			<a class="brand navigator shortHome" href="#mainContainer">
+				Home
+			</a>
+			<div class="nav-collapse collapse">
+				<ul class="nav">
+					<li><a href="#settingsContainer" class="navigator" id="settingsLink">Feestdagen</a></li>
+					<li><a href="#timesheetContainer" class="navigator" id="timesheetLink">Timesheet</a></li>
+				</ul>
+				<p class="navbar-text pull-right" >			
+					<span data-bind="with:user">
+						<!-- ko if: name -->
+						Logged in as <a href="#" class="navbar-link" data-bind="text:name,attr:{href:link}"></a>
+						<!-- /ko -->
+					</span>
+					<!-- ko if: authorized -->
+					<select data-bind="options: calendars, optionsText: 'name', optionsValue:'id', value: calendarId"></select>
+					<a href="https://accounts.google.com/logout">
+						<i class="icon-off icon-white"></i>
+					</a>
+					<!-- /ko -->
+				</p>
+			</div><!--/.nav-collapse -->
+		</div>
+
