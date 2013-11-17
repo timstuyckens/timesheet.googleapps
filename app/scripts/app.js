@@ -4,9 +4,10 @@
   angular.module('time', [
     'ngCookies',
     'ngResource',
-    'ngSanitize'
+    'ngSanitize',
+    'ngRoute'
   ])
-    .config(function($routeProvider) {
+    .config(["$routeProvider",function($routeProvider) {
       $routeProvider
         .when('/', {
           templateUrl: 'MainContainer.html',
@@ -17,11 +18,11 @@
           controller: 'HolidayCtrl'
         })
         .when('/timesheet', {
-          templateUrl: 'TimesheetContainer.html',
+          templateUrl: 'timesheetContainer.html',
           controller: 'TimesheetCtrl'
         })
         .otherwise({
           redirectTo: '/'
         });
-    });
+    }]);
 }());
