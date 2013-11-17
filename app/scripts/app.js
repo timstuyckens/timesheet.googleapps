@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  angular.module('yeomansetupApp', [
+  angular.module('time', [
     'ngCookies',
     'ngResource',
     'ngSanitize'
@@ -9,8 +9,16 @@
     .config(function($routeProvider) {
       $routeProvider
         .when('/', {
-          templateUrl: 'views/main.html',
-          controller: 'MainCtrl'
+          templateUrl: 'MainContainer.html',
+          controller: 'HomeCtrl'
+        })
+        .when('/holiday', {
+          templateUrl: 'HolidayContainer.html',
+          controller: 'HolidayCtrl'
+        })
+        .when('/timesheet', {
+          templateUrl: 'TimesheetContainer.html',
+          controller: 'TimesheetCtrl'
         })
         .otherwise({
           redirectTo: '/'
