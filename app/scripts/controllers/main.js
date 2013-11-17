@@ -1,10 +1,13 @@
-'use strict';
+(function() {
+	"use strict";
 
-angular.module('yeomansetupApp')
-  .controller('MainCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+	angular.module('yeomansetupApp')
+		.controller('MainCtrl', function($scope) {
+			$scope.awesomeThings = [
+				'HTML5 Boilerplate',
+				'AngularJS',
+				'Karma'
+			];
+		});
+
+}());

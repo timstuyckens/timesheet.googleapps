@@ -2,8 +2,9 @@ define(["knockout"], function(ko) {
 	"use strict";
 
 	var trimAndLowerCase = function(s) {
-		if (!s)
+		if (!s){
 			return "";
+		}	
 		return $.trim(s.toLowerCase());
 	};
 	var Category = function(name, number, parent) {

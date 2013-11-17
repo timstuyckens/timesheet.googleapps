@@ -18,13 +18,17 @@ define(["knockout", "utils"], function(ko, utils) {
 				max = i.number(),
 				remaining = 0;
 			ko.utils.arrayForEach(items, function(item) {
-				if (!isSummaryInteresting(item, name))
+				if (!isSummaryInteresting(item, name)){
 					return;
+				}
 				var addedPart = item.isFullDay ? 1.0 : 0.5;
-				if (utils.toDate(item.end) < now)
+				if (utils.toDate(item.end) < now){
 					aantalOpgenomen = aantalOpgenomen + addedPart;
-				else
+				}
+					
+				else{
 					aantalGepland = aantalGepland + addedPart;
+				}		
 			});
 			remaining = max - aantalOpgenomen - aantalGepland;
 			temp.push({

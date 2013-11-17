@@ -31,10 +31,10 @@ define(["knockout", "moment", "utils"], function(ko, moment, utils) {
 		self.startDateText = formatDate(self.startDate);
 		self.status = d.status;
 		self.htmlLink = d.htmlLink;
-		self.isWeekend = function() {
+		self.isWeekend = (function() {
 			var day = self.startDate.getDay();
 			return day === 0 || day === 6;
-		}();
+		})();
 		self.isFullDay = true;
 		self.isForenoon = true;
 		self.isAfternoon = true;
@@ -60,9 +60,16 @@ define(["knockout", "moment", "utils"], function(ko, moment, utils) {
 			if (e.start.date && e.end.date && e.end.date !== e.start.date) {
 				console.log("sequence from " + e.start.date + " till " + e.end.date + " " + e.summary);
 				//als verlof overloopt tussen twee jaren vb 30/12 tot 5/1
-				var endDateEventDays = parseInt(moment(endDateEvent).format("YYYY"), 10) > parseInt(now.format("YYYY"), 10) //als het doorloopt
-				? (parseInt(moment(new Date(new Date().getFullYear(), 11, 31)).format("DDD"), 10) + 1) //neem 365 of 366 bij schrikkeljaar
-				: parseInt(moment(endDateEvent).format("DDD"), 10); //anders neem eindatum dag in jaar
+				 //als het doorloopt
+				var endDateEventDays=0;
+				if(parseInt(moment(endDateEvent).format("YYYY"), 10) > parseInt(now.format("YYYY"), 10)){
+					//neem 365 of 366 bij schrikkeljaar
+					endDateEventDays=(parseInt(moment(new Date(new Date().getFullYear(), 11, 31)).format("DDD"), 10) + 1);
+				}
+				else{ 
+					//anders neem eindatum dag in jaar
+					endDateEventDays= parseInt(moment(endDateEvent).format("DDD"), 10);
+				}
 				var daysOfEvent = endDateEventDays - parseInt(moment(startDateEvent).format("DDD"), 10);
 				if (daysOfEvent > 1) { //einddatum van google api ligt 1 dag verder dan je verwacht.
 					for (i = 0; i < daysOfEvent; i++) {
@@ -98,7 +105,9 @@ define(["knockout", "moment", "utils"], function(ko, moment, utils) {
 		eventObjects.sort(function(a, b) {
 			var a1 = a.startDate,
 				b1 = b.startDate;
-			if (a1 == b1) return 0;
+			if (a1 === b1)  {
+				return 0;
+			}
 			return a1 > b1 ? 1 : -1;
 		});
 
@@ -145,11 +154,12 @@ define(["knockout", "moment", "utils"], function(ko, moment, utils) {
 		var recoverableHolidaysCount = ko.utils.arrayFilter(holidays, function(hol) {
 			return hol.isRecoverable;
 		}).length;
-		if (recoverableHolidaysCount > 0)
+		if (recoverableHolidaysCount > 0){
 			return [{
 				name: "Verlof VF",
 				number: recoverableHolidaysCount
-			}];
+			}];			
+		}
 		return [];
 	};
 

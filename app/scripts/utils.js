@@ -8,13 +8,15 @@ define(['jquery'], function($) {
 			var day = parseInt(input.date.substring(8, 10), 10);
 			return new Date(year, month, day);
 		}
-		if (input.dateTime)
+		if (input.dateTime){
 			return new Date(input.dateTime);
+		}	
 		throw "Unable to convert input to a date " + input;
 	};
 	that.trimAndLowerCase = function(s) {
-		if (!s)
+		if (!s){
 			return "";
+		}
 		return $.trim(s.toLowerCase());
 	};
 	return that;

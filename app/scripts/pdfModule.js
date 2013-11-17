@@ -1,3 +1,4 @@
+/*global jsPDF */
 define(['jquery', 'jspdfFormHtml'], function($, jspdf) {
 	"use strict";
 	var that = {};
@@ -70,8 +71,9 @@ define(['jquery', 'jspdfFormHtml'], function($, jspdf) {
 			$.each(headers, function(i, e) {
 				pdf.text(headerLeft + lineMargin, headerTop + lineMargin * 2, e);
 				headerLeft += columnWidth;
-				if (i > 0) //eerste kolom dubbel zo breed als de twee andere, geen lijn tonen
+				if (i > 0){ //eerste kolom dubbel zo breed als de twee andere, geen lijn tonen
 					pdf.line(firstLineX1 + i * columnWidth, detailTop, firstLineX1 + i * columnWidth, firstLineY2);
+				}
 			});
 			pdf.line(left, headerTop + rowHeight, left + headers.length * columnWidth, headerTop + rowHeight);
 
@@ -100,7 +102,9 @@ define(['jquery', 'jspdfFormHtml'], function($, jspdf) {
 
 	that.create = function(data) {
 		try {
+			/*jshint newcap:false */
 			var pdf = new jsPDF();
+			/*jshint newcap:true */
 			pdf.setFontSize(fontsizeNormal);
 			initPixel();
 			createSummary(pdf, data);

@@ -36,7 +36,7 @@ define(["knockout", "moment", "utils", "overviewCalculationModule"], function(ko
 				cats = self.categories();
 			return ko.utils.arrayFilter(self.events(), function(e) {
 				var inCat = !! $.grep(cats, function(cat) {
-					return utils.trimAndLowerCase(e.summary) == utils.trimAndLowerCase(cat.name());
+					return utils.trimAndLowerCase(e.summary) === utils.trimAndLowerCase(cat.name());
 				})[0];
 				return m === e.startDate.getMonth() && inCat;
 			});

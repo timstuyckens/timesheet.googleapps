@@ -1,5 +1,6 @@
 // Generated on 2013-11-12 using generator-angular 0.5.1
-'use strict';
+(function () {
+   "use strict";
 
 // # Globbing
 // for performance reasons we're only matching one level down:
@@ -112,7 +113,9 @@ module.exports = function(grunt) {
     jshint: {
       options: {
         jshintrc: '.jshintrc',
-        ignores: ['<%= yeoman.app %>/scripts/vendors/{,*/}*.js']
+        ignores: [
+          '<%= yeoman.app %>/scripts/vendor/{,*/}*.js'
+        ]
       },
       all: [
         'Gruntfile.js',
@@ -386,8 +389,10 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('default', [
-    //'jshint',
+    'jshint',
     //'test',
     'build'
   ]);
 };
+
+}());

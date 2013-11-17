@@ -92,8 +92,9 @@ define(['jquery', 'knockout', 'moment'], function($, ko, moment) {
 					self.totaal(self.totaal() + hours);
 				}
 				var comment = dayInMonthThatIsNotBillable ? dayInMonthThatIsNotBillable.comment : "";
-				if (notFullDayWorked)
+				if (notFullDayWorked){
 					comment = "Halve dag";
+				}
 				workedDays.push(new TimesheetDay({
 					isWeekend: weekend,
 					startDate: currentMoment,
@@ -125,10 +126,12 @@ define(['jquery', 'knockout', 'moment'], function($, ko, moment) {
 			$.each(e.items, function(j, d) {
 				d.comment = d.summaryCatMatch;
 				var timesheetDay = new TimesheetDay(d);
-				if (d.isFullDay)
+				if (d.isFullDay){
 					arrayWithAllTypesVerlof.push(timesheetDay);
-				else
+				}		
+				else{
 					arrayWithAllHalfDays.push(timesheetDay);
+				}					
 			});
 		});
 		$.each(data.holidays, function(i, e) {
@@ -145,12 +148,14 @@ define(['jquery', 'knockout', 'moment'], function($, ko, moment) {
 
 		vm.notBillableDays(arrayWithAllTypesVerlof);
 		vm.notFullDayWorkedDays(arrayWithAllHalfDays);
-		if (aMoment) //testable
+		if (aMoment){ //testable
 			vm.timeSheetDay(aMoment);
+		}
 		vm.name(getNameFromMailAdress(data.calenderName));
 		if (!isInitialized) {
-			if (domElement.length) //testable
+			if (domElement.length){ //testable
 				ko.applyBindings(vm, domElement[0]);
+			}
 			isInitialized = true;
 		}
 		return {
