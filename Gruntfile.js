@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     },
     watch: {
       jade: {
-        files: ['<% yeoman.app %>/jade/{,*/}*.jade'],
+        files: ['<%= yeoman.app %>/jade/{,*/}*.jade'],
         tasks: ['jade']
       },
       coffee: {
