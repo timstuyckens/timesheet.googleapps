@@ -89,12 +89,11 @@ require(['ViewModel','gcalModule','knockout','jquery','navigatieModule','Calenda
 	};
 	function doAuthorizedWork(){
 		vm.authorized(true);
-		gcalModule.getUserInfo().then(function(user){
-			calViewModel.setUser(user);
-		});		
-		gcalModule.getCalendarList().then(function(cals){
-			calViewModel.addCalendars(cals);
-		});	
+		$.when(gcalModule.getUserInfo(),gcalModule.getCalendarList())
+			.done(function(userInfo,cals){
+				calViewModel.setUser(user);
+				calViewModel.addCalendars(cals);
+			});
 	}
 	function handleClientLoad() {
 		gcalModule.authorize()
