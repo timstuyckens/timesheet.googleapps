@@ -3,6 +3,8 @@ define(["knockout","moment","utils","overviewCalculationModule"], function(ko,mo
 
 	return function (){
 		var self=this;
+		var currentYear=new Date().getFullYear();
+
 		self.loading=ko.observable(true);
 		self.authorized=ko.observable(false);
 		self.categories=ko.observableArray([]);
@@ -12,6 +14,8 @@ define(["knockout","moment","utils","overviewCalculationModule"], function(ko,mo
 			var items=self.events(),cats=self.categories();
 			return overviewCalculator.getGroupedOverviewByEventsAndCategories(items,cats);
 		});
+		
+		self.years=ko.observable([currentYear-2,currentYear-1,currentYear,currentYear+1]);
 		self.categoryOverviews=ko.computed(function(){
 			var items=self.events(),cats=self.categories();
 			return overviewCalculator.getOverviewByEventsAndCategories(items,cats);
@@ -28,6 +32,15 @@ define(["knockout","moment","utils","overviewCalculationModule"], function(ko,mo
 		self.month=ko.computed(function(){
 			var niceMonth=utils.months[self.monthDay().month()];
 			return niceMonth;
+		});
+		self.year=ko.computed({
+	        read: function () {
+	            return self.monthDay().year();
+	        },
+	        write: function (value) {
+	        	self.monthDay(self.monthDay().year(parseInt(value,10)));
+	        },
+	        owner:self
 		});
 		self.eventsInMonth=ko.computed(function(){
 			var m=self.monthDay().month(),cats=self.categories();

@@ -64,6 +64,7 @@ require(['ViewModel','gcalModule','knockout','jquery','navigatieModule','Calenda
 	vm.holidays.subscribe(function(hol){
 		settingsViewModel.holidays(hol);
 	});
+
 	var showTimeSheetForSelectedCalendar=function(){
 		require(["timesheetModule"],function(timesheetModule){
 			var vmToJs=ko.toJS(vm);
@@ -75,26 +76,34 @@ require(['ViewModel','gcalModule','knockout','jquery','navigatieModule','Calenda
 		var calId=calViewModel.calendarId();
 		var holidayCalId=calViewModel.holidayCalId();
 		vm.events([]);
-
-		$.when(gcalModule.getEventsItems(calId),gcalModule.getEventsItems(holidayCalId),gdocsModule.getSettings())
+		var year=vm.year();
+		$.when(gcalModule.getEventsItems(calId,year),gcalModule.getEventsItems(holidayCalId,year),gdocsModule.getSettings())
 			.done(function(events,holidays,settings){
+				//console.time && console.time("refresh");
 				vm.holidays(mapper.mapHolidays(holidays));
-				vm.events(mapper.mapEvents(events));
+				vm.events(mapper.mapEvents(events, year));
 				settingsViewModel.clearCategories();
 				settingsViewModel.addCategories(mapper.mapHolidaysToSetting(vm.holidays()));
-				settingsViewModel.addCategories(mapper.mapSettings(settings,calId,moment().year()));
+				settingsViewModel.addCategories(mapper.mapSettings(settings,calId,year));
 				settingsViewModel.changed(!settingsViewModel.changed());
 				showTimeSheetForSelectedCalendar();				
+				//console.timeEnd && console.timeEnd("refresh");
 			});	
 	};
+	var lastFetchedYear=(new Date()).getFullYear();
+	vm.year.subscribe(function(theNewYear){
+		if(theNewYear!==lastFetchedYear){
+			vm.refresh();
+			lastFetchedYear=theNewYear;
+		}		
+	});
 	function doAuthorizedWork(){
 		vm.authorized(true);
-		gcalModule.getUserInfo().then(function(user){
-			calViewModel.setUser(user);
-		});		
-		gcalModule.getCalendarList().then(function(cals){
-			calViewModel.addCalendars(cals);
-		});	
+		$.when(gcalModule.getUserInfo(),gcalModule.getCalendarList())
+			.done(function(userInfo,cals){
+				calViewModel.setUser(userInfo);
+				calViewModel.addCalendars(cals);
+			});
 	}
 	function handleClientLoad() {
 		gcalModule.authorize()

@@ -46,6 +46,7 @@ div#mainContainer.container-fluid.
 		
 		<div>
 			<a class="btn btn-mini non-printable" data-bind="click:gotoPreviousMonth"> < </a>
+			<select data-bind="options: years, value:year" style="width: 75px;"></select>
 			<span style="margin-left:5px;margin-right:5px" data-bind="text:month"> </span> (<span data-bind="text:monthCounter"> </span>)
 			<a class="btn btn-mini non-printable" data-bind="click:gotoNextMonth"> > </a>
 		</div>

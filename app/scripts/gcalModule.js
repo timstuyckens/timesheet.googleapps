@@ -8,7 +8,7 @@ define(["async!https://apis.google.com/js/client.js?test=test"], function() {
 		var calClient=false;
 		var oauthClient=false;
 		var OAuthScopes={
-			read:"https://www.googleapis.com/auth/calendar.readonly",
+			read:["https://www.googleapis.com/auth/calendar.readonly","https://www.googleapis.com/auth/userinfo.profile"],
 			readWrite:"https://www.googleapis.com/auth/calendar"
 		};
 		var config={
@@ -83,8 +83,8 @@ define(["async!https://apis.google.com/js/client.js?test=test"], function() {
 			return dfd;		
 		};
 		
-		self.getEventsItems=function(calId){
-			var currentYear=new Date().getFullYear();
+		self.getEventsItems=function(calId, currentYear){
+			currentYear= currentYear || new Date().getFullYear();
 			var timeMin=currentYear+"-01-01T00:00:00+02:00";
 			var timeMax=(currentYear+1)+"-01-01T00:00:00+02:00";
 			return getEventsItemsWork({

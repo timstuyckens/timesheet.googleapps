@@ -49,11 +49,10 @@ define(["knockout","moment","utils"], function(ko,moment,utils) {
             return item.start.date && !item.start.dateTime; //enkel hele dagen
         });
 	};
-	that.mapEvents=function(googleCalendarEvents){
+	that.mapEvents=function(googleCalendarEvents, year){
 		var eventObjects=[];
 		ko.utils.arrayForEach(googleCalendarEvents,function(e){
 			var theEvent=new Event(e);
-			var now=moment();
 			var i=0;
 			var startDateEvent=utils.toDate(e.start);
 			var endDateEvent=utils.toDate(e.end);
@@ -61,7 +60,7 @@ define(["knockout","moment","utils"], function(ko,moment,utils) {
 			if(e.start.date && e.end.date && e.end.date!==e.start.date ){
 				console.log( "sequence from "+e.start.date+" till "+e.end.date+" "+e.summary);
 				//als verlof overloopt tussen twee jaren vb 30/12 tot 5/1
-				var endDateEventDays=parseInt(moment(endDateEvent).format("YYYY"),10)>parseInt(now.format("YYYY"),10)	//als het doorloopt
+				var endDateEventDays=parseInt(moment(endDateEvent).format("YYYY"),10)>year	//als het doorloopt
 									? (parseInt(moment(new Date(new Date().getFullYear(),11,31)).format("DDD"),10) +1)	//neem 365 of 366 bij schrikkeljaar
 									: parseInt(moment(endDateEvent).format("DDD"),10); //anders neem eindatum dag in jaar
 				var daysOfEvent=endDateEventDays-parseInt(moment(startDateEvent).format("DDD"),10);

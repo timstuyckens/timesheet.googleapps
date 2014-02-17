@@ -19,17 +19,18 @@ header.navbar.navbar-inverse.navbar-fixed-top.non-printable
 					<li><a href="#timesheetContainer" class="navigator" id="timesheetLink">Timesheet</a></li>
 				</ul>
 				<p class="navbar-text pull-right" >			
-					<span data-bind="with:user">
-						<!-- ko if: name -->
-						Logged in as <a href="#" class="navbar-link" data-bind="text:name,attr:{href:link}"></a>
-						<!-- /ko -->
-					</span>
+
 					<!-- ko if: authorized -->
 					<select data-bind="options: calendars, optionsText: 'name', optionsValue:'id', value: calendarId"></select>
 					<a href="https://accounts.google.com/logout">
 						<i class="icon-off icon-white"></i>
 					</a>
 					<!-- /ko -->
+					<span data-bind="with:user">
+						<!-- ko if: name -->
+						<a href="#" class="navbar-link" data-bind="text:name,attr:{href:link}"></a>
+						<!-- /ko -->
+					</span>
 				</p>
 			</div><!--/.nav-collapse -->
 		</div>

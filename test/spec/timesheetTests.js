@@ -122,7 +122,7 @@ define(function(require) {
 				return res.date==="16/08/2013";
 			})[0];
 			it('should contain a comment ', function() {
-				normalDay.comment.should.equal("Verlof");
+				normalDay.comment.should.equal("verlof");
 			});				
 			it('should have 0 worked hours', function() {
 				normalDay.hours.should.equal(0);

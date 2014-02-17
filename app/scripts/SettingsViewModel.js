@@ -10,7 +10,7 @@ define(["knockout"], function(ko) {
 		var self=this;
 		
 		self.name=ko.observable(name||"");
-		self.number=ko.observable(parseInt(number,10)||0).extend({ throttle: 50 });
+		self.number=ko.observable(parseFloat(number,10)||0).extend({ throttle: 50 });
 		self.summaryCatMatch=ko.computed(function(){
 			return trimAndLowerCase(self.name());
 		});

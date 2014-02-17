@@ -2,6 +2,7 @@
 define(function(require) {
 	"use strict";
 	var mapperModule = require('mapperModule');
+	var year=2013;
  
 	describe('mapperModule', function() {
 		
@@ -11,12 +12,12 @@ define(function(require) {
 			var objectInput= JSON.parse(input);	
 		
 			it('should contain 30 items', function() {
-				var results=mapperModule.mapEvents(objectInput);
+				var results=mapperModule.mapEvents(objectInput,year);
 				results.length.should.equal(30);
 			});
 			
 			describe('Event mapping of the second of januari of timstuyckens calendar', function() {
-				var results=mapperModule.mapEvents(objectInput);
+				var results=mapperModule.mapEvents(objectInput,year);
 				var result=results[0];
 				it('should contain the right summary: verlof', function() {
 					result.summary.should.equal("test");
@@ -37,7 +38,7 @@ define(function(require) {
 			
 			
 			describe('Event mapping of a verlof that spans multiple days (2-3 mei)', function() {
-				var results=mapperModule.mapEvents(objectInput);
+				var results=mapperModule.mapEvents(objectInput,year);
 				it('should containg a verlof event for the second of may', function() {
 					var result= $.grep(results,function(r){
 						return r.start.date && r.start.date.indexOf("2013-05-02") !==-1;
@@ -82,7 +83,7 @@ define(function(require) {
 				//niet gerelateerde trainersvergadering over ganse 29ste
 				{"kind":"calendar#event","etag":"gA","id":"jk","status":"confirmed","htmlLink":"h","created":"2013-06-06T19:05:30.000Z","updated":"2013-06-06T19:05:30.757Z","summary":"Trainingsvergadering ? (optioneel)","creator":{"email":"timstuyckens@gmail.com","displayName":"Tim Stuyckens","self":true},"organizer":{"email":"timstuyckens@gmail.com","displayName":"Tim Stuyckens","self":true},"start":{"date":"2013-08-29"},"end":{"date":"2013-08-30"},"transparency":"transparent","iCalUID":"j0mo8a08bcclb8ci1r2fj8fo0k@google.com","sequence":0,"reminders":{"useDefault":true}}				
 			];
-			var events=mapperModule.mapEvents(input);
+			var events=mapperModule.mapEvents(input,year);
 			describe('Event op 22 aug', function() {
 				var result= $.grep(events,function(r){
 					return r.startDate.getTime()==new Date(2013,7,22,13).getTime();
@@ -113,7 +114,7 @@ define(function(require) {
 				"end":{"date":"2014-01-01"},
 				"transparency":"transparent","iCalUID":"qm6chaag861k4r7jdauo2jefus@google.com","sequence":0,"reminders":{"useDefault":true}}
 			];
-			var events=mapperModule.mapEvents(input);
+			var events=mapperModule.mapEvents(input,year);
 			describe('Event 30 december', function() {
 				var result= $.grep(events,function(r){
 					return r.start.date && r.start.date.indexOf("2013-12-30") !==-1;
@@ -140,7 +141,7 @@ define(function(require) {
 				"end":{"date":"2013-09-28"}
 				}
 			];
-			var events=mapperModule.mapEvents(input);
+			var events=mapperModule.mapEvents(input,year);
 			describe('Event 27 december', function() {
 				var result= $.grep(events,function(r){
 					return r.start.date && r.start.date.indexOf("2013-09-27") !==-1;

@@ -1,7 +1,7 @@
 define( ['jquery','knockout','moment'],function($,ko,moment) {
 	"use strict";
 	var that={};
-	var months=["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","Dececmeber"];
+	var months=["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"];
 	var isInitialized=false;
 	var isWeekend=function(eventDay){
 		var day=eventDay.day();

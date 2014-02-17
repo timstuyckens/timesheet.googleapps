@@ -37,17 +37,18 @@
            <li><a href="#timesheetContainer" class="navigator" id="timesheetLink">Timesheet</a></li>
           </ul>
           <p class="navbar-text pull-right" >			
-           <span data-bind="with:user">
-            <!-- ko if: name -->
-            Logged in as <a href="#" class="navbar-link" data-bind="text:name,attr:{href:link}"></a>
-            <!-- /ko -->
-           </span>
+          
            <!-- ko if: authorized -->
            <select data-bind="options: calendars, optionsText: 'name', optionsValue:'id', value: calendarId"></select>
            <a href="https://accounts.google.com/logout">
             <i class="icon-off icon-white"></i>
            </a>
            <!-- /ko -->
+           <span data-bind="with:user">
+            <!-- ko if: name -->
+            <a href="#" class="navbar-link" data-bind="text:name,attr:{href:link}"></a>
+            <!-- /ko -->
+           </span>
           </p>
          </div><!--/.nav-collapse -->
         </div>
@@ -150,6 +151,7 @@
        <div>
         <a class="btn btn-mini non-printable" data-bind="click:gotoPreviousMonth"> < </a>
         <span style="margin-left:5px;margin-right:5px" data-bind="text:month"> </span> (<span data-bind="text:monthCounter"> </span>)
+        <select data-bind="options: years, value:year" style="width: 75px;"></select>
         <a class="btn btn-mini non-printable" data-bind="click:gotoNextMonth"> > </a>
        </div>
        <ul data-bind="foreach:eventsInMonth">
