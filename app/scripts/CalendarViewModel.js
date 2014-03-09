@@ -39,7 +39,7 @@ define(["knockout",'moment'], function(ko,moment) {
 				if(cal.name.indexOf("bite.be") !==-1 && cal.name.toLowerCase().indexOf(userFirstNameToLower)!==-1){
 					biteCalenderId=cal.id;
 				}
-				if(cal.name.indexOf("Feestdagen") !==-1){
+				if(cal.name === "Feestdagen"){
 					self.holidayCalId(cal.id);
 				}
 			});
