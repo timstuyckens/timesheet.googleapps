@@ -12,7 +12,7 @@ define(["async!https://apis.google.com/js/client.js?test=test"], function() {
 			readWrite:"https://www.googleapis.com/auth/calendar"
 		};
 		var config={
-			clientId:'235814546194.apps.googleusercontent.com', //werkt enkel vanaf gymhaacht.be
+			clientId:'235814546194.apps.googleusercontent.com', 
 			apiKey:"AIzaSyBu67W-Rs4jQr0sGksPujKU92ClbStmSZs",	//aanvragen https://code.google.com/apis/console/b/0/#project:235814546194
 			scopes:OAuthScopes.read
 		};
