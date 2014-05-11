@@ -1,6 +1,9 @@
 div#timesheetContainer.container-fluid.hide
 	br.non-printable
 	br.non-printable
+
+	select.non-printable(data-bind="options: customers,optionsText: 'text',optionsValue: 'id', value:selectedCustomer")
+
 	h1.logo(data-bind="text:title")
 	table
 		thead

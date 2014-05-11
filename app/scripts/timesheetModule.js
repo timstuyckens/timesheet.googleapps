@@ -1,4 +1,4 @@
-define( ['jquery','knockout','moment'],function($,ko,moment) {
+define( ['jquery','knockout','moment','timeserviceModule'],function($,ko,moment, timesheetService) {
 	"use strict";
 	var that={};
 	var months=["Januari","Februari","Maart","April","Mei","Juni","Juli","Augustus","September","Oktober","November","December"];
@@ -7,6 +7,7 @@ define( ['jquery','knockout','moment'],function($,ko,moment) {
 		var day=eventDay.day();
 		return day===0 || day===6;
 	};
+	var arrayWithAllTypesVerlofTemp;
 	var getResultWhenTodayIsEndOfMonth=function(today){
 		var result={};
 		var nextMonth=moment(today).add('months', 1);
@@ -45,9 +46,15 @@ define( ['jquery','knockout','moment'],function($,ko,moment) {
 	};
 	var ViewModel=function(){
 		var self=this;
+		self.customers=ko.observableArray([]);
+		self.selectedCustomer=ko.observable();
 		self.notBillableDays=ko.observableArray([]);
 		self.notFullDayWorkedDays=ko.observableArray([]);
-		self.name=ko.observable("");
+		self.mail=ko.observable("");
+		self.name=ko.computed(function(){
+			return getNameFromMailAdress(self.mail());
+		});
+		
 		self.timeSheetDay=ko.observable(moment());
 		self.firstAndLastOfMontForTimeSheetDay=ko.computed(function(){	
 			var today=self.timeSheetDay();
@@ -97,6 +104,7 @@ define( ['jquery','knockout','moment'],function($,ko,moment) {
 					comment="Halve dag";
 				workedDays.push(new TimesheetDay({isWeekend:weekend,startDate:currentMoment,workedFullDay:workedFullDay,workedHalfDay:workedHalfDay,hours:hours,comment:comment}));
 			}
+			console.log("workedDays : ",workedDays);
 			return workedDays;
 		});
 		
@@ -108,10 +116,53 @@ define( ['jquery','knockout','moment'],function($,ko,moment) {
 			var temp=moment(self.timeSheetDay()).add("months",1);
 			self.timeSheetDay(temp);
 		};
+		self.fetchTrackedTimeAndSetNotBillableDaysForCustomer=function(customerId){
+			self.notBillableDays(arrayWithAllTypesVerlofTemp.slice(0));
+			var dfd = new $.Deferred();
+			var firstAndLast=self.firstAndLastOfMontForTimeSheetDay();
+			var maand=firstAndLast.start.month()
+			var jaar=firstAndLast.start.year()
+			timesheetService.getTrackedTimeByCustomer(self.mail(),maand,jaar ,customerId).done(function(trackedTime){
+				//kijk welke dagen van de maand er effectief voor de klant gewerkt is.
+				// => als de dag van de maand niet voorkomt in de trackedTime, toevoegen aan notBillable
+				var start=moment(firstAndLast.start);	//clone date because adding wil change first of month
+
+				var temp=[];
+				for(var i=start;i<=firstAndLast.end;i.add('days',1)){
+					var currentMoment=moment(i).format("DD/MM/YYYY");
+					var isDayFoundInTrackedTime=$.grep(trackedTime,function(t){
+						return t.date.getFullYear() === i._d.getFullYear() &&t.date.getMonth() === i._d.getMonth() &&  t.date.getDate() === i._d.getDate();
+					}).length>0;
+					if(!isDayFoundInTrackedTime){
+						//todo: kijken of het er nog niet in zat
+						//if(self.notBillableDays()[0].date.getTime() == trackedTime[0].date.getTime())
+						temp.push(new TimesheetDay({
+							startDate:moment(i),
+							workedFullDay:false,
+							workedHalfDay:false,
+							hours:0,
+							comment:"andere klant"}));
+					}
+				}
+				ko.utils.arrayPushAll(self.notBillableDays, temp);
+				dfd.resolve(temp);
+			});
+			return dfd;			
+		}
+
+		self.selectedCustomer.subscribe(function(customerId){
+			self.fetchTrackedTimeAndSetNotBillableDaysForCustomer(customerId);
+		});
 	};
 	
 	var vm=new ViewModel();
 	that.show=function(data,aMoment){
+		vm.mail(data.calenderName);
+		timesheetService.getCustomersData(data.calenderName).done(function(customers){
+			vm.customers(customers);
+			vm.fetchTrackedTimeAndSetNotBillableDaysForCustomer(customers[0].id);
+		});		
+
 		var domElement=$("#timesheetContainer");
 		var arrayWithAllTypesVerlof=[];
 		var arrayWithAllHalfDays=[];
@@ -132,10 +183,11 @@ define( ['jquery','knockout','moment'],function($,ko,moment) {
 		});
 		
 		vm.notBillableDays(arrayWithAllTypesVerlof);
+		arrayWithAllTypesVerlofTemp=arrayWithAllTypesVerlof.slice(0);
 		vm.notFullDayWorkedDays(arrayWithAllHalfDays);
 		if(aMoment)	//testable
 			vm.timeSheetDay(aMoment);
-		vm.name(getNameFromMailAdress(data.calenderName));
+
 		if(!isInitialized){
 			if(domElement.length)//testable
 				ko.applyBindings(vm,domElement[0]);
@@ -146,6 +198,7 @@ define( ['jquery','knockout','moment'],function($,ko,moment) {
 			title:vm.title(),
 			totalHours:vm.totaal()
 		};
+
 	};
 	
 	return that;
