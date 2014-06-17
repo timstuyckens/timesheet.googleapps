@@ -1,4 +1,4 @@
-define(["async!https://apis.google.com/js/client.js?test=test"], function() {
+define(["https://apis.google.com/js/client.js?test=test"], function() {
 	//wrapper around google calendar api
 
 

@@ -1,54 +1,146 @@
-@import "compass_twitter_bootstrap";
+$icon-font-path: "../bower_components/bootstrap-sass-official/vendor/assets/fonts/bootstrap/";
 
-body{
-	margin-left: 13%;
-	margin-right: 13%;
+// bower:scss
+@import "../bower_components/bootstrap-sass-official/vendor/assets/stylesheets/bootstrap.scss";
+// endbower
+
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
 }
+
+/* Space out content a bit */
+body {
+    padding-bottom: 20px;
+}
+
 #groupedEventsContainer {
-  @include makeRow();        
+  @include make-row();        
   .groupedEvents {
-    @include makeColumn(6); 
+    @include make-lg-column(6); 
   }
 }
 
 table{
-	@extend .table;
-	@extend .table-hover;
-	@extend .table-bordered;
+    @extend .table;
+    @extend .table-hover;
+    @extend .table-bordered;
 }
 
 button{
-	@extend .btn-primary;
-}
-.maxNumberCatOccurrence {
-	width:  40px;
+    @extend .btn;
+    @extend .btn-primary;
 }
 
-#mainContainer,#settingsContainer{
-	margin-top:90px;
+.maxNumberCatOccurrence {
+    width:  40px;
+}
+
+#mainContainer,#settingsContainer, #timesheetContainer{
+    margin-top:90px;
+    margin-left: 13%;
+    margin-right: 13%;
 }
 
 #timesheetContainer tr:last-child td {
     font-weight:bold;
 }
 #handtekening{
-	display:none;
+    display:none;
 }
 .weekend{
-	font-style:italic;
+    font-style:italic;
 }
 .shortHome{
-	display:none !important;
+    display:none !important;
 }
 .logo{
-	background-image: url("../images/bitelogo.png");
-	background-size: 190px 80px;
-	background-repeat: no-repeat;
-	height: 56px;
-	padding-top: 27px;
-	padding-bottom: 0px;
-	margin-bottom: 0px;
-	background-position: right top;
+    background-image: url("../images/bitelogo.png");
+    background-size: 190px 80px;
+    background-repeat: no-repeat;
+    height: 86px;
+    padding-top: 25px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    background-position: right top;
 }
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+    border-bottom: 1px solid #e5e5e5;
+
+    /* Make the masthead heading the same height as the navigation */
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 40px;
+        padding-bottom: 19px;
+    }
+}
+
+/* Custom page footer */
+.footer {
+    padding-top: 19px;
+    color: #777;
+    border-top: 1px solid #e5e5e5;
+}
+
+.container-narrow > hr {
+    margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.jumbotron {
+    text-align: center;
+    border-bottom: 1px solid #e5e5e5;
+    .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+    }
+}
+
+/* Supporting marketing content */
+.marketing {
+    margin: 40px 0;
+    p + h4 {
+        margin-top: 28px;
+    }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+    .container {
+        max-width: 730px;
+    }
+
+    /* Remove the padding we set earlier */
+    .header,
+    .marketing,
+    .footer {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* Space out the masthead */
+    .header {
+        margin-bottom: 30px;
+    }
+
+    /* Remove the bottom border on the jumbotron for visual effect */
+    .jumbotron {
+        border-bottom: 0;
+    }
+}
+
 @import "mobile";
 @import "print";

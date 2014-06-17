@@ -26,6 +26,12 @@
 		height: auto;
 		padding-top: 0x;
 	}
+
+	#timesheetContainer {
+		margin-top: 0;
+		margin-left: 0;
+	    margin-right: 0;
+	}
 }
 
 @media print and (max-width: 800px) {

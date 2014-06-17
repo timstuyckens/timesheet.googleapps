@@ -35,18 +35,18 @@ require.config({
 	},
 
   paths: {
-    async: 'vendor/requirejs-plugins/async',
-    jquery: 'vendor/jquery.min',
-	knockout:'vendor/knockout-2.2.0',
-	moment:'vendor/moment.min',
-	jspdf:'vendor/jspdf',
+    async: '../bower_components/requirejs-plugins/src/async',
+    jquery: '../bower_components/jquery/dist/jquery.min',
+	knockout:'../bower_components/knockout/dist/knockout',
+	moment:'../bower_components/moment/min/moment.min',
+	jspdf:'../bower_components/jspdf/dist/jspdf',
 	jspdfFileSaver:'vendor/FileSaver/FileSaver',
 	jspdfBlobBuilder:'vendor/BlobBuilder/BlobBuilder',
 	jspdfStandardFontsMetrics:'vendor/jspdf.plugin.standard_fonts_metrics',
 	jspdfFormHtml:'vendor/jspdf.plugin.from_html',	
 	jspdfSplitTextToSize:"vendor/jspdf.plugin.split_text_to_size",
 	jspdfAddImage:"vendor/jspdf.plugin.addimage",
-	Tabletop:"vendor/Tabletop"
+	Tabletop:"../bower_components/tabletop/src/tabletop"
   }
 });
  

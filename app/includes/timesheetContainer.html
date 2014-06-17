@@ -1,0 +1,28 @@
+
+<div id="timesheetContainer" class="container-fluid hide"><br class="non-printable"/><br class="non-printable"/>
+  <select data-bind="options: customers,optionsText: 'text',optionsValue: 'id', value:selectedCustomer" class="form-control non-printable"></select>
+  <h1 data-bind="text:title" class="logo"></h1>
+  <table>
+    <thead>
+      <tr>
+        <th><a data-bind="click:gotoPreviousMonth" class="btn btn-default btn-mini non-printable"><</a><span style="margin-left:5px;margin-right:5px">Datum</span><a data-bind="click:gotoNextMonth" class="btn btn-default btn-mini non-printable">></a></th>
+        <th></th>
+        <th style="width: 185px;" class="non-printable"></th>
+      </tr>
+    </thead>
+    <tbody><!-- ko foreach: timesheetDays -->
+      <tr data-bind="css:{weekend:isWeekend}">
+        <td data-bind="text:date"></td>
+        <td><!-- ko if: workedFullDay --><span data-bind="text:hours"></span><!-- /ko -->
+          <!-- ko if: workedHalfDay --><span data-bind="text:hours"></span><!-- /ko -->
+        </td>
+        <td class="non-printable"><span data-bind="text:comment"></span></td>
+      </tr><!-- /ko -->
+      <tr>
+        <td>Totaal</td>
+        <td data-bind="text:totaal" colspan="2"></td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="handtekening">Handtekening</div>
+</div>
