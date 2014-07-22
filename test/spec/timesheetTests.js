@@ -78,7 +78,7 @@ define(function(require) {
 	
 	describe('timesheetModule - Augustus 2013 ', function() {
 		
-		var result=timesheetModule.show(testData,moment("Aug 25, 2013"));
+		var result=timesheetModule.show(testData,  moment([2013,7,25]));
 		var timesheetDays=result.timesheetDays;
 
 		describe('Title', function() {
