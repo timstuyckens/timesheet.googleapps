@@ -1,13 +1,14 @@
 require.config({
   paths: {
-    jquery: '../app/scripts/vendor/jquery.min',
+  jquery: '../app/bower_components/jquery/dist/jquery.min',
 	utils:'../app/scripts/utils',
-	knockout:'../app/scripts/vendor/knockout-2.2.0',
-	moment:'../app/scripts/vendor/moment.min',
+	knockout:'../app/bower_components/knockout/dist/knockout',
+	moment:'../app/bower_components/moment/moment',
 	mapperModule:'../app/scripts/mapperModule',
 	SettingsViewModel:'../app/scripts/SettingsViewModel',
 	overviewCalculationModule:'../app/scripts/overviewCalculationModule',
 	timesheetModule:'../app/scripts/timesheetModule',
+  timeserviceModule:'../app/scripts/timeserviceModule',
 	mocha: 'lib/mocha/mocha',
     chai: 'lib/chai'
   }
