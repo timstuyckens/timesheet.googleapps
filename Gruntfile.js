@@ -6,6 +6,7 @@ module.exports = function( grunt ) {
   // https://github.com/cowboy/grunt/blob/master/docs/getting_started.md
   //
 	grunt.loadNpmTasks('grunt-jade');
+	grunt.loadNpmTasks('grunt-contrib-watch');
   
   grunt.initConfig({
 
