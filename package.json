@@ -3,5 +3,7 @@
   "name": "",
   "version": "0.0.0",
   "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {
+    "grunt-contrib-connect": "^0.10.1"
+  }
 }

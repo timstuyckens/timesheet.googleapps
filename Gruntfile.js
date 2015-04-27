@@ -7,12 +7,23 @@ module.exports = function( grunt ) {
   //
 	grunt.loadNpmTasks('grunt-jade');
 	grunt.loadNpmTasks('grunt-contrib-watch');
+	grunt.loadNpmTasks('grunt-contrib-connect');
   
   grunt.initConfig({
 
     // Project configuration
     // ---------------------
-	
+	 connect: {
+		server: {
+		  options: {
+			port: 3501,
+			base: 'app',
+			keepalive:true
+		  },
+		  keepalive:true
+		},
+		keepalive:true
+  },
 	
 	// compile .jade files using jade
 	jade: {
