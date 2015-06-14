@@ -24,6 +24,7 @@ define(["knockout","moment","utils"], function(ko,moment,utils) {
 		var formatDate=function(dateObject){
 			return days[dateObject.getDay()]+" "+dateObject.getDate()+" "+utils.months[dateObject.getMonth()]+" "+dateObject.getFullYear();
 		};
+
 		self.summary=d.summary;
 		self.summaryCatMatch=utils.trimAndLowerCase(d.summary);
 		self.start=d.start;
@@ -36,6 +37,11 @@ define(["knockout","moment","utils"], function(ko,moment,utils) {
 			var day=self.startDate.getDay();
 			return day===0 || day===6;
 		}();
+		self.created=new Date(d.created);
+		//later aangemaakt dan startdatum OF verlof voor dezelfde maand na 21ste
+		self.suspicious= (self.created > self.startDate && self.startDate.getMonth() !== self.created.getMonth())
+				|| (self.startDate.getMonth() == self.created.getMonth() && self.created.getDate() > 21);
+		self.suspiciousText="Aangemaakt op "+formatDate(self.created);
 		self.isFullDay=true;
 		self.isForenoon=true;
 		self.isAfternoon=true;
@@ -74,7 +80,8 @@ define(["knockout","moment","utils"], function(ko,moment,utils) {
 							end:formattedNewlyCreatedDateObject,
 							start:formattedNewlyCreatedDateObject,
 							status:theEvent.status,
-							htmlLink:theEvent.htmlLink
+							htmlLink:theEvent.htmlLink,
+							created: theEvent.created
 						});
 						
 						if(!theNewEvent.isWeekend){

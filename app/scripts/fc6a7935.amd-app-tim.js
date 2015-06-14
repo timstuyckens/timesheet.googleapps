@@ -5968,7 +5968,14 @@ var requirejs, require, define;
             b.summary = a.summary, b.summaryCatMatch = c.trimAndLowerCase(a.summary), b.start = a.start, b.end = a.end, b.startDate = c.toDate(b.start), b.startDateText = d(b.startDate), b.status = a.status, b.htmlLink = a.htmlLink, b.isWeekend = function() {
                 var a = b.startDate.getDay();
                 return a === 0 || a === 6
-            }(), b.isFullDay = !0, b.isForenoon = !0, b.isAfternoon = !0
+            }(), b.isFullDay = !0, b.isForenoon = !0, b.isAfternoon = !0;
+			
+					b.created=new Date(a.created);
+		//later aangemaakt dan startdatum OF verlof voor dezelfde maand na 21ste
+		b.suspicious= (b.created > b.startDate && b.startDate.getMonth() !== b.created.getMonth())
+				|| (b.startDate.getMonth() == b.created.getMonth() && b.created.getDate() > 21);
+		b.suspiciousText="Aangemaakt op "+d(b.created);
+			
         };
         return d.mapHolidays = function(b) {
             return a.utils.arrayForEach(b, function(a) {
@@ -5985,7 +5992,7 @@ var requirejs, require, define;
                     var l = parseInt(b(k).format("YYYY"), 10) > e ? parseInt(b(new Date((new Date).getFullYear(), 11, 31)).format("DDD"), 10) + 1 : parseInt(b(k).format("DDD"), 10), m = l - parseInt(b(j).format("DDD"), 10);
                     if (m > 1)
                         for (i = 0; i < m; i++) {
-                            var n = c.toDate(d.start), o = b(n).add("days", i), p = {date: o.format("YYYY-MM-DD")}, q = new g({summary: d.summary,end: p,start: p,status: d.status,htmlLink: d.htmlLink});
+                            var n = c.toDate(d.start), o = b(n).add("days", i), p = {date: o.format("YYYY-MM-DD")}, q = new g({summary: d.summary,end: p,start: p,status: d.status,htmlLink: d.htmlLink,created: d.created});
                             q.isWeekend || (console.log("    gesplitst in   " + q.end.date), h.push(q))
                         }
                     else if (m === 1 || m === 0)

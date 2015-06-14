@@ -78,6 +78,10 @@ div#mainContainer.container-fluid.
 						<tr>
 							<td>
 								<a class="eventLink" data-bind="text:startDateText,attr:{href:htmlLink}"></a> 
+								<!-- ko if: suspicious -->						
+									<i class="icon-warning-sign" data-bind="attr:{title:suspiciousText}">!!</i>
+								 <!-- /ko -->
+													
 								<!-- ko ifnot: isFullDay -->
 									<span class="badge" data-bind="visible:isForenoon",style="margin-left: 10px;"> Voormiddag </span>
 									<span class="badge" data-bind="visible:isAfternoon",style="margin-left: 10px;"> Namiddag </span>
